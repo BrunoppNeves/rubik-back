@@ -1,0 +1,25 @@
+{
+  "name": "rubik-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrunoppNeves/rubik-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrunoppNeves/rubik-back/issues"
+  },
+  "homepage": "https://github.com/BrunoppNeves/rubik-back#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
