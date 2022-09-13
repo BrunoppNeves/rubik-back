@@ -20,24 +20,9 @@ const userSchema = new mongoose.Schema(
       required: [true, "Please provide your birthday"],
     },
 
-    genre: {
-      type: Number,
+    gender: {
+      type: String,
       required: [true, "Please provide your genre"],
-    },
-
-    checkbox1: {
-      type: Boolean,
-      required: [true, "Please provide your checkbox1"],
-    },
-
-    checkbox2: {
-      type: Boolean,
-      required: [true, "Please provide your checkbox2"],
-    },
-
-    checkbox3: {
-      type: Boolean,
-      required: [true, "Please provide your checkbox3"],
     },
 
     password: {
