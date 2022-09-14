@@ -31,6 +31,15 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
+
+    imagePath: {
+      type: String,
+      required: true,
+    },
+    imageId: {
+      type: String,
+      required: true
+    },
   },
   { timestamps: true }
 );

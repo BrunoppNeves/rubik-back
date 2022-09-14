@@ -22,9 +22,14 @@ const songSchema = new mongoose.Schema(
         required: true,
       },
 
-      image: {
-        
-      }
+      imagePath: {
+        type: String,
+        required: false,
+      },
+      imageId: {
+        type: String,
+        required: false
+      },
     },
     { timestamps: true }
   );
