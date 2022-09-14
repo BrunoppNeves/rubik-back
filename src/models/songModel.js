@@ -22,6 +22,16 @@ const songSchema = new mongoose.Schema(
         required: true,
       },
 
+      duration: {
+        type: String,
+        required: true
+      },
+
+      playPath: {
+        type: String,
+        required: false
+      },
+
       imagePath: {
         type: String,
         required: false,
@@ -34,5 +44,5 @@ const songSchema = new mongoose.Schema(
     { timestamps: true }
   );
   
-  const Song = mongoose.model("Song", userSchema);
+  const Song = mongoose.model("Song", songSchema);
   module.exports = Song;
