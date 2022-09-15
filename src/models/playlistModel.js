@@ -12,19 +12,32 @@ const playlistSchema = new mongoose.Schema(
         required: false,
       },
 
-      songs: {
-        //array de musicas, fazer relação
-      },
+      songs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Song",
+        required: false
+      }],
 
-      is_public: {
+      isPublic: {
         type: Boolean,
         required: true,
         default: true
       },
 
-      user: {
-        //relação com usuario
-      }
+      createdBy: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: false
+      }],
+
+      imagePath: {
+        type: String,
+        required: false,
+      },
+      imageId: {
+        type: String,
+        required: false
+      },
     },
     { timestamps: true }
   );
