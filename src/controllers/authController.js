@@ -26,5 +26,5 @@ module.exports = {
           console.log(err);
           return res.status(403).send({ error: 'Failed on login' });
       }
-  }
+    }
 }
