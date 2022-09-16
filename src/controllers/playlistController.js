@@ -29,6 +29,12 @@ module.exports = {
     const { playlistId, songId } = req.body;
     try {
       const playlist = await Playlist.findById(playlistId);
+      //verifica se a musica ja existe na playlist
+      // for (let i = 0; i < playlist.songs.length; i++) {
+      //   if (playlist.songs[i] == songId) {
+      //     return res.status(400).json({ err: "Song already exists" });
+      //   }
+      // }
       playlist.songs.push(songId);
       await playlist.save();
       return res.status(200).json(playlist);
@@ -40,8 +46,9 @@ module.exports = {
   removeSong: async (req, res) => {
     const { playlistId, songId } = req.body;
     try {
-      const playlist = await Playlist.findById(playlistId).populate("songs");
-      playlist.songs 
+      const playlist = await Playlist.findById(playlistId).select("songs");
+      const editPlaylist = playlist.songs;
+      editPlaylist.splice(editPlaylist.indexOf(songId), 1);
       await playlist.save();
       return res.status(200).json(playlist);
     } catch (err) {
@@ -51,9 +58,35 @@ module.exports = {
 
   updatePlaylist: async (req, res) => {},
 
-  changeVisibility: async (req, res) => {},
+  changeVisibility: async (req, res) => {
+    const id = req.params.id;
+    try {
+      const playlist = await Playlist.findById(req.params.id);
+      const update = await Playlist.findByIdAndUpdate({_id: id}, {isPublic: !playlist.isPublic}, {new: true});
+      return res.status(200).json(update);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  },
 
-  deletePlaylist: async (req, res) => {},
+  deletePlaylist: async (req, res) => {
+    const playlistId = req.params.id;
+    try {
+      const playlist = await Playlist.findById(playlistId);
+      await playlist.deleteOne({ id: playlistId });
+      return res.status(200).json({ message: "Playlist deleted" });
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  },
 
-  getPlaylist: async (req, res) => {},
+  getPlaylist: async (req, res) => {
+    const playlistId = req.params.id;
+    try {
+      const playlist = await Playlist.findById(playlistId).populate("songs");
+      return res.status(200).json(playlist);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  },
 };
