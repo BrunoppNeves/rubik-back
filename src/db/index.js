@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const db = await mongoose.connect("mongodb://localhost:27017/rubik", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const db =  mongoose.connect(
+      "mongodb+srv://rubik:rubik123@rubik.myhts5q.mongodb.net/?retryWrites=true&w=majority",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
     console.log("Connected to db");
   } catch (err) {
     console.log(err);
