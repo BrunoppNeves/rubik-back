@@ -51,6 +51,8 @@ module.exports = {
 
   updatePlaylist: async (req, res) => {},
 
+  changeVisibility: async (req, res) => {},
+
   deletePlaylist: async (req, res) => {},
 
   getPlaylist: async (req, res) => {},
