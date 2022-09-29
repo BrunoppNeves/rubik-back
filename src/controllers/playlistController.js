@@ -80,7 +80,11 @@ module.exports = {
     }
   },
 
-  getPlaylist: async (req, res) => {
+  getAllPublic: async (req, res) => {
+
+  },
+
+  getOnePublic: async (req, res) => {
     const playlistId = req.params.id;
     try {
       const playlist = await Playlist.findById(playlistId).populate("songs");

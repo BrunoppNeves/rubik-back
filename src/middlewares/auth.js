@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { promisify } = require("util");
 require("dotenv").config();
 
 module.exports = async (req, res, next) => {
@@ -14,12 +13,13 @@ module.exports = async (req, res, next) => {
     const [, authToken] = authHeader.split(' ');
  
     try {
-        const decoded = await promisify(jwt.verify)(authToken, process.env.AUTH_SECRET);
+        const decoded = jwt.verify(authToken, process.env.SECRET);
 
         req.id = decoded.id;
 
         return next();
     } catch (err) {
+        console.log(err.message)
         return res.status(401).json({
             error: "Invalid Token",
             });
