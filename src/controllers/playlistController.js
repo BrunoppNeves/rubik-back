@@ -81,13 +81,18 @@ module.exports = {
   },
 
   getAllPublic: async (req, res) => {
-
+    try {
+      const playlists = await Playlist.find({isPublic: true}).populate("songs");
+      return res.status(200).json(playlists);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
   },
 
   getOnePublic: async (req, res) => {
     const playlistId = req.params.id;
     try {
-      const playlist = await Playlist.findById(playlistId).populate("songs");
+      const playlist = await Playlist.find({_id: playlistId, isPublic: true}).populate("songs");
       return res.status(200).json(playlist);
     } catch (err) {
       return res.status(400).json({ err: err.message });
