@@ -9,6 +9,10 @@ router.get("/get_all_public", playlistController.getAllPublic);
 
 router.use(authMiddleware);
 router.post("/create", multer.single("image"), playlistController.create);
+router.get("/get_all_private/:user_id", playlistController.getAllPrivate);
+router.get("/get_one_private/:user_id/:playlist_id", playlistController.getOnePrivate);
+
+router.put("/update/:id", playlistController.updatePlaylist);
 router.put("/addSong", playlistController.addSong);
 router.put("/removeSong", playlistController.removeSong);
 router.put("/changeVisibility/:id", playlistController.changeVisibility);

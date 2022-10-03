@@ -1,6 +1,7 @@
 const Playlist = require("../models/playlistModel");
 const Image = require("../models/imageModel");
 const { convertBase64 } = require("../utils/handleImage");
+const { isValidObjectId } = require("mongoose");
 require("dotenv").config();
 
 module.exports = {
@@ -57,14 +58,14 @@ module.exports = {
   },
 
   updatePlaylist: async (req, res) => {
-    const { playlistId, name, description, isPublic } = req.body;
+    const playlistId = req.params.id;
+    const { name, description, isPublic } = req.body;
     try {
-      const playlist = await Playlist.findById(playlistId);
-      const update = await Playlist.findByIdAndUpdate(
-        { _id: playlistId },
-        { name: name },
-        { description: description },
-        { isPublic: isPublic },
+      if(!isValidObjectId(playlistId) || !await Playlist.findById(playlistId)){
+        return res.status(400).json({ err: "Playlist não encontrada" });
+      }
+      const update = await Playlist.findByIdAndUpdate(playlistId,
+        { name, description, isPublic },
         { new: true }
       );
       return res.status(200).json(update);
@@ -122,4 +123,25 @@ module.exports = {
       return res.status(400).json({ err: err.message });
     }
   },
+
+  getAllPrivate: async(req, res) => {
+    const { user_id } = req.params;
+    try {
+      const private_playlists = await Playlist.find({ createdBy: user_id }).populate( "songs" );
+      return res.status(200).json(private_playlists);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  },
+
+  getOnePrivate: async (req, res) => {
+    const { playlist_id, user_id } = req.params;
+    try {
+      const private_playlist = await Playlist.find({ _id: playlist_id, createdBy: user_id }).populate( "songs" );
+      return res.status(200).json(private_playlist);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
 };
