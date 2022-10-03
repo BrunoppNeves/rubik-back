@@ -56,13 +56,32 @@ module.exports = {
     }
   },
 
-  updatePlaylist: async (req, res) => {},
+  updatePlaylist: async (req, res) => {
+    const { playlistId, name, description, isPublic } = req.body;
+    try {
+      const playlist = await Playlist.findById(playlistId);
+      const update = await Playlist.findByIdAndUpdate(
+        { _id: playlistId },
+        { name: name },
+        { description: description },
+        { isPublic: isPublic },
+        { new: true }
+      );
+      return res.status(200).json(update);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  },
 
   changeVisibility: async (req, res) => {
     const id = req.params.id;
     try {
       const playlist = await Playlist.findById(req.params.id);
-      const update = await Playlist.findByIdAndUpdate({_id: id}, {isPublic: !playlist.isPublic}, {new: true});
+      const update = await Playlist.findByIdAndUpdate(
+        { _id: id },
+        { isPublic: !playlist.isPublic },
+        { new: true }
+      );
       return res.status(200).json(update);
     } catch (err) {
       return res.status(400).json({ err: err.message });
@@ -82,7 +101,9 @@ module.exports = {
 
   getAllPublic: async (req, res) => {
     try {
-      const playlists = await Playlist.find({isPublic: true}).populate("songs");
+      const playlists = await Playlist.find({ isPublic: true }).populate(
+        "songs"
+      );
       return res.status(200).json(playlists);
     } catch (err) {
       return res.status(400).json({ err: err.message });
@@ -92,7 +113,10 @@ module.exports = {
   getOnePublic: async (req, res) => {
     const playlistId = req.params.id;
     try {
-      const playlist = await Playlist.find({_id: playlistId, isPublic: true}).populate("songs");
+      const playlist = await Playlist.find({
+        _id: playlistId,
+        isPublic: true,
+      }).populate("songs");
       return res.status(200).json(playlist);
     } catch (err) {
       return res.status(400).json({ err: err.message });
