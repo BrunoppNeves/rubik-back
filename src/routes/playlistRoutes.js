@@ -11,6 +11,7 @@ router.use(authMiddleware);
 router.post("/create", multer.single("image"), playlistController.create);
 router.get("/get_all_private/:user_id", playlistController.getAllPrivate);
 router.get("/get_one_private/:user_id/:playlist_id", playlistController.getOnePrivate);
+router.get("/get_playlist/:id", playlistController.getOnePlaylist);
 
 router.put("/update/:id", playlistController.updatePlaylist);
 router.put("/addSong", playlistController.addSong);

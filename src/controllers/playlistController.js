@@ -142,6 +142,18 @@ module.exports = {
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
-  }
+  },
+
+  getOnePlaylist: async (req, res) => {
+    const playlistId = req.params.id;
+    try {
+      const playlist = await Playlist.find({
+        _id: playlistId,
+      }).populate("songs");
+      return res.status(200).json(playlist);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  },
 
 };

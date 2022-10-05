@@ -15,17 +15,17 @@ module.exports = {
     } = req.body;
 
     try {
-      const avatarData = await convertBase64(req.file? req.file : undefined);
-      const avatar = await Image.create({ image: avatarData });
-      const avatarPath = process.env.IMAGE_URL + avatar._id;
+      // const avatarData = await convertBase64(req.file? req.file : undefined);
+      // const avatar = await Image.create({ image: avatarData });
+      // const avatarPath = process.env.IMAGE_URL + avatar._id;
       const user = await User.create({
         name: name,
         email: email,
         birthday: birthday,
         gender: gender,
         password: password,
-        imagePath: avatarPath,
-        imageId: avatar._id,
+        // imagePath: avatarPath,
+        // imageId: avatar._id,
       });
       return res.status(201).json({ user: {_id: user.id, name: user.name, email: user.email }});
     } catch (err) {
